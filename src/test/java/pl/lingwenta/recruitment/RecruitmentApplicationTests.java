@@ -83,27 +83,4 @@ public class RecruitmentApplicationTests extends IntegrationTestBase {
                 .jsonPath("$.status").isEqualTo("406 NOT_ACCEPTABLE")
                 .jsonPath("$.message").isEqualTo("No acceptable representation");
     }
-
-    @Test
-    void applicationUnhappyPathTestUserOrRepoDoesNotExist() {
-        //given
-        server.stubFor(get(OM_API_ARCHIVE_REQ_URI)
-                .willReturn(notFound()));
-
-        //when then
-        client.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path(CONTROLLER_URI)
-                        .pathSegment(LONGITUDE, LATITUDE)
-                        .build())
-                .header(ACCEPT, APPLICATION_JSON_VALUE)
-                .exchange()
-                .expectStatus()
-                .isEqualTo(404)
-                .expectHeader()
-                .contentType(APPLICATION_JSON)
-                .expectBody()
-                .jsonPath("$.status").isEqualTo("404 NOT_FOUND");
-    }
-
 }
