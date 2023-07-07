@@ -2,7 +2,6 @@ package pl.lingwenta.recruitment.client;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -50,9 +49,6 @@ public class OpenMeteoArchiveClient {
     private Mono<RuntimeException> handleError(ClientResponse response) {
         log.warn("Encountered error response with code [{}]", response.statusCode());
 
-        if (HttpStatus.valueOf(response.statusCode().value()) == HttpStatus.TOO_MANY_REQUESTS) {
-            return Mono.error(ClientException.tooManyRequests());
-        }
-        return Mono.error(ClientException.unknownClientError(response.statusCode()));
+        return Mono.error(ClientException.clientError(response.statusCode()));
     }
 }

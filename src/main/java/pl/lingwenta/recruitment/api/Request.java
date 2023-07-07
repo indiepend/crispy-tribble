@@ -18,6 +18,11 @@ public class Request {
     private String longitude;
     private LocalDateTime timestamp;
 
+    @Deprecated
+    public Request() {
+        //for hibernate
+    }
+
     public Request(String latitude, String longitude, LocalDateTime timestamp) {
         this.latitude = latitude;
         this.longitude = longitude;
